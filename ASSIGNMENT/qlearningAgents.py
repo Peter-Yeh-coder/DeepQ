@@ -55,7 +55,6 @@ class QLearningAgent(ReinforcementAgent):
         """
         "*** YOUR CODE HERE ***"
         return self.QValues[state, action]
-        util.raiseNotDefined()
 
     def computeValueFromQValues(self, state):
         """
@@ -73,7 +72,6 @@ class QLearningAgent(ReinforcementAgent):
             return max(values)
         else:
             return 0.0
-        util.raiseNotDefined()
 
     def computeActionFromQValues(self, state):
         """
@@ -90,7 +88,6 @@ class QLearningAgent(ReinforcementAgent):
         for action in legal_actions:
             if value == self.getQValue(state, action):
                 return action
-        util.raiseNotDefined()
 
     def getAction(self, state):
         """
@@ -114,7 +111,6 @@ class QLearningAgent(ReinforcementAgent):
             action = self.getPolicy(state)
 
         return action
-        util.raiseNotDefined()
 
     def update(self, state, action, nextState, reward):
         """
@@ -202,7 +198,6 @@ class ApproximateQAgent(PacmanQAgent):
 
         # Returns the value
         return QValue
-        util.raiseNotDefined()
 
     def update(self, state, action, nextState, reward):
         """

@@ -110,7 +110,6 @@ class ValueIterationAgent(ValueEstimationAgent):
                     self.mdp.getReward(state, action, trans_state) + self.discount * self.getValue(trans_state))
 
         return QValue
-        util.raiseNotDefined()
 
     def computeActionFromValues(self, state):
         """
