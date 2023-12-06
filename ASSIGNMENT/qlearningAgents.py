@@ -17,6 +17,7 @@ from featureExtractors import *
 from learningAgents import ReinforcementAgent
 import util
 import random
+import time
 
 
 class QLearningAgent(ReinforcementAgent):
@@ -137,7 +138,7 @@ class QLearningAgent(ReinforcementAgent):
 class PacmanQAgent(QLearningAgent):
     "Exactly the same as QLearningAgent, but with different default parameters"
 
-    def __init__(self, epsilon=0.05,gamma=0.8,alpha=0.2, numTraining=0, **args):
+    def __init__(self, epsilon=0.05, gamma=0.8, alpha=0.2, numTraining=0, **args):
         """
         These default parameters can be changed from the pacman.py command line.
         For example, to change the exploration rate, try:
@@ -161,8 +162,8 @@ class PacmanQAgent(QLearningAgent):
         informs parent of action for Pacman.  Do not change or remove this
         method.
         """
-        action = QLearningAgent.getAction(self,state)
-        self.doAction(state,action)
+        action = QLearningAgent.getAction(self, state)
+        self.doAction(state, action)
         return action
 
 
@@ -174,6 +175,7 @@ class ApproximateQAgent(PacmanQAgent):
        and update.  All other QLearningAgent functions
        should work as is.
     """
+
     def __init__(self, extractor='IdentityExtractor', **args):
         self.featExtractor = util.lookup(extractor, globals())()
         PacmanQAgent.__init__(self, **args)
@@ -189,7 +191,7 @@ class ApproximateQAgent(PacmanQAgent):
         """
         "*** YOUR CODE HERE ***"
         # Acquire the feature vector and sets initial value to 0
-        features = self.featExtractor.getFeatures(state,action)
+        features = self.featExtractor.getFeatures(state, action)
         QValue = 0.0
 
         # Performs the dot product to acquire value
@@ -224,3 +226,44 @@ class ApproximateQAgent(PacmanQAgent):
             "*** YOUR CODE HERE ***"
             # Didn't need to alter?
             pass
+
+
+# Function to run the training for 1000 iterations
+def train_q_agent():
+    # Create an instance of the Q-learning agent
+    q_agent = ApproximateQAgent()
+
+    # Number of training iterations
+    num_iterations = 1000
+
+    # Lists to store time and scores after each iteration
+    iteration_times = []
+    iteration_scores = []
+
+    # Run training for 1000 iterations
+    for iteration in range(1, num_iterations + 1):
+        start_time = time.time()  # Record the start time
+
+        # Run a game
+        game = run_games(1, q_agent)[0]
+        score = game.state.getScore()
+
+        # Record the end time
+        end_time = time.time()
+
+        # Calculate the time taken for the iteration
+        iteration_time = end_time - start_time
+
+        # Print and store the results
+        print(f"Iteration {iteration}: Time = {iteration_time:.2f}s, Score = {score}")
+        iteration_times.append(iteration_time)
+        iteration_scores.append(score)
+
+    # Print average time and score
+    avg_time = sum(iteration_times) / num_iterations
+    avg_score = sum(iteration_scores) / num_iterations
+    print(f"\nAverage Time = {avg_time:.2f}s, Average Score = {avg_score}")
+
+
+# Run the training
+train_q_agent()
