@@ -623,7 +623,10 @@ def readCommand(argv):
     return args
 
 
+from qlearningAgents import ApproximateQAgent# , DeepQAgent
+
 def loadAgent(pacman, nographics):
+    agentOpts = {}
     # Looks through all pythonPath Directories for the right module,
     pythonPathStr = os.path.expandvars("$PYTHONPATH")
     if pythonPathStr.find(';') == -1:
@@ -646,9 +649,19 @@ def loadAgent(pacman, nographics):
                 if nographics and modulename == 'keyboardAgents.py':
                     raise Exception(
                         'Using the keyboard requires graphics (not text display)')
+
+                # Register ApproximateQAgent
+                if 'ApproximateQAgent' in dir(module):
+                    agentOpts['ApproximateQAgent'] = ApproximateQAgent
+
+                # Register DeepQAgent
+                if 'DQNAgent' in dir(module):
+                    agentOpts['DeepQAgent'] = DeepQAgent
+
                 return getattr(module, pacman)
     raise Exception('The agent ' + pacman +
                     ' is not specified in any *Agents.py.')
+
 
 
 def replayGame(layout, actions, display):

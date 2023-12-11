@@ -11,14 +11,14 @@
 # Student side autograding was added by Brad Miller, Nick Hay, and
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
-
+import sys
 from game import *
 from featureExtractors import *
 from learningAgents import ReinforcementAgent
 import util
 import random
 import time
-
+import layout
 
 class QLearningAgent(ReinforcementAgent):
     """
@@ -44,7 +44,6 @@ class QLearningAgent(ReinforcementAgent):
     def __init__(self, **args):
         "You can initialize Q-values here..."
         ReinforcementAgent.__init__(self, **args)
-
         "*** YOUR CODE HERE ***"
         self.QValues = util.Counter()
 
@@ -175,7 +174,6 @@ class ApproximateQAgent(PacmanQAgent):
        and update.  All other QLearningAgent functions
        should work as is.
     """
-
     def __init__(self, extractor='IdentityExtractor', **args):
         self.featExtractor = util.lookup(extractor, globals())()
         PacmanQAgent.__init__(self, **args)
@@ -191,7 +189,7 @@ class ApproximateQAgent(PacmanQAgent):
         """
         "*** YOUR CODE HERE ***"
         # Acquire the feature vector and sets initial value to 0
-        features = self.featExtractor.getFeatures(state, action)
+        features = self.featExtractor.getFeatures(state,action)
         QValue = 0.0
 
         # Performs the dot product to acquire value
@@ -227,43 +225,62 @@ class ApproximateQAgent(PacmanQAgent):
             # Didn't need to alter?
             pass
 
+# python pacman.py -p ApproximateQAgent -x 100 -n 110 -l smallGrid > approxQ100scores.text
+# python pacman.py -p ApproximateQAgent -x 500 -n 510 -l smallGrid > approxQ500scores.text
+# python pacman.py -p ApproximateQAgent -x 1000 -n 1010 -l smallGrid > approxQ1000scores.text
+# python pacman.py -p ApproximateQAgent -x 2000 -n 2010 -l smallGrid > approxQ2000scores.text
 
-# Function to run the training for 1000 iterations
-def train_q_agent():
-    # Create an instance of the Q-learning agent
-    q_agent = ApproximateQAgent()
+# import tensorflow as tf
+# import numpy as np
 
-    # Number of training iterations
-    num_iterations = 1000
+# class SimpleNeuralNetwork(tf.Module):
+#     def __init__(self, num_features, learning_rate=0.001, regularization_strength=0.01):
+#         self.weights = tf.Variable(tf.random.normal(shape=(num_features, 1)))
+#         self.bias = tf.Variable(tf.zeros(shape=(1,)))
+#         self.learning_rate = learning_rate
+#         self.regularization_strength = regularization_strength
 
-    # Lists to store time and scores after each iteration
-    iteration_times = []
-    iteration_scores = []
+#     def forward(self, inputs):
+#         return tf.matmul(inputs, self.weights) + self.bias
 
-    # Run training for 1000 iterations
-    for iteration in range(1, num_iterations + 1):
-        start_time = time.time()  # Record the start time
+#     def predict(self, features):
+#         return self.forward(features)
 
-        # Run a game
-        game = run_games(1, q_agent)[0]
-        score = game.state.getScore()
+#     def calculate_loss(self, features, targets):
+#         predictions = self.predict(features)
+#         loss = tf.reduce_mean(tf.square(targets - predictions))
 
-        # Record the end time
-        end_time = time.time()
+#         # L2 regularization term
+#         regularization_term = 0.5 * self.regularization_strength * tf.reduce_sum(tf.square(self.weights))
+#         loss += regularization_term
 
-        # Calculate the time taken for the iteration
-        iteration_time = end_time - start_time
+#         return loss
 
-        # Print and store the results
-        print(f"Iteration {iteration}: Time = {iteration_time:.2f}s, Score = {score}")
-        iteration_times.append(iteration_time)
-        iteration_scores.append(score)
+#     def update_weights(self, features, targets):
+#         with tf.GradientTape() as tape:
+#             loss = self.calculate_loss(features, targets)
 
-    # Print average time and score
-    avg_time = sum(iteration_times) / num_iterations
-    avg_score = sum(iteration_scores) / num_iterations
-    print(f"\nAverage Time = {avg_time:.2f}s, Average Score = {avg_score}")
+#         gradients = tape.gradient(loss, [self.weights, self.bias])
+#         self.weights.assign_sub(self.learning_rate * gradients[0])
+#         self.bias.assign_sub(self.learning_rate * gradients[1])
 
+# Example usage:
 
-# Run the training
-train_q_agent()
+# Assuming num_features is the number of features mentioned in the text
+# num_features = 5  # Replace with the actual number of features
+
+# Creating the neural network
+# nn = SimpleNeuralNetwork(num_features)
+
+# Example features from the text
+# features = np.array([[distance_to_food, num_ghosts, bias, food_1_step_away, no_ghost_1_step_away] for _ in range(50)])
+# targets = np.array([[q_value] for q_value in your_q_values_list])  # Replace with actual Q-values
+
+# Training the neural network
+# for epoch in range(num_epochs):
+#     nn.update_weights(features, targets)
+
+# Making predictions
+# new_features = np.array([[new_distance_to_food, new_num_ghosts, new_bias, new_food_1_step_away, new_no_ghost_1_step_away]])
+# predicted_q_value = nn.predict(new_features)
+# print("Predicted Q-value:", predicted_q_value.numpy())
