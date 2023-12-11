@@ -1,0 +1,6 @@
+Beginning 1000 episodes of Training
+Reinforcement Learning Status:
+	Completed 100 out of 1000 training episodes
+	Average Rewards over all training: -481.62
+	Average Rewards for last 100 episodes: -481.62
+	Episode took 89.35 seconds
