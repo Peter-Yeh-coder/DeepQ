@@ -85,7 +85,7 @@ class PacmanDQN(game.Agent):
         model.add(Flatten())
 
         # Additional Dense layer
-        model.add(Dense(256, activation='relu'))
+        model.add(Dense(64, activation='relu'))
 
         # Dense layers
         fc_layer_params = (100, 50)
@@ -356,3 +356,13 @@ class PacmanDQN(game.Agent):
             move = Directions.STOP
 
         return move
+
+# python pacman.py -p PacmanDQN -x 100 -n 110 -l smallGrid > deepGrid100.txt
+# python pacman.py -p PacmanDQN -x 500 -n 510 -l smallGrid > deepGrid500.txt
+# python pacman.py -p PacmanDQN -x 1000 -n 1010 -l smallGrid > deepGrid1000.txt
+# python pacman.py -p PacmanDQN -x 2000 -n 2010 -l smallGrid > deepGrid2000.txt
+
+# python pacman.py -p PacmanDQN -x 100 -n 110 -l smallClassic > deepClassic100.txt
+# python pacman.py -p PacmanDQN -x 500 -n 510 -l smallClassic > deepClassic500.txt
+# python pacman.py -p PacmanDQN -x 1000 -n 1010 -l smallClassic > deepClassic1000.txt
+# python pacman.py -p PacmanDQN -x 2000 -n 2010 -l smallClassic > deepClassic2000.txt
