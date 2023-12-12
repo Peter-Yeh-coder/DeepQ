@@ -31,7 +31,7 @@ params = {
     'gamma': 0.8,  # Discount rate (gamma value)
 
     # Epsilon value (epsilon-greedy)
-    'eps': 1.0,  # Epsilon start value
+    'eps': 0.05,  # Epsilon start value
     'eps_final': 0.01,  # Epsilon end value
     'eps_step': 1000,  # Epsilon steps between start and end (linear)
 

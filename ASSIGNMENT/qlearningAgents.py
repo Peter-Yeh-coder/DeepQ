@@ -225,10 +225,15 @@ class ApproximateQAgent(PacmanQAgent):
             # Didn't need to alter?
             pass
 
-# python pacman.py -p ApproximateQAgent -x 100 -n 110 -l smallGrid > approxQ100scores.text
-# python pacman.py -p ApproximateQAgent -x 500 -n 510 -l smallGrid > approxQ500scores.text
-# python pacman.py -p ApproximateQAgent -x 1000 -n 1010 -l smallGrid > approxQ1000scores.text
-# python pacman.py -p ApproximateQAgent -x 2000 -n 2010 -l smallGrid > approxQ2000scores.text
+# python pacman.py -p ApproximateQAgent -x 100 -n 110 -l smallGrid > approxGrid100.text
+# python pacman.py -p ApproximateQAgent -x 500 -n 510 -l smallGrid > approxGrid500.text
+# python pacman.py -p ApproximateQAgent -x 1000 -n 1010 -l smallGrid > approxGrid1000.text
+# python pacman.py -p ApproximateQAgent -x 2000 -n 2010 -l smallGrid > approxGrid2000.text
+
+# python pacman.py -p ApproximateQAgent -x 100 -n 110 -l smallClassic > approxClassic100.text
+# python pacman.py -p ApproximateQAgent -x 500 -n 510 -l smallClassic > approxClassic500.text
+# python pacman.py -p ApproximateQAgent -x 1000 -n 1010 -l smallClassic > approxClassic1000.text
+# python pacman.py -p ApproximateQAgent -x 2000 -n 2010 -l smallClassic > approxClassic2000.text
 
 # import tensorflow as tf
 # import numpy as np
